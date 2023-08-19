@@ -9,6 +9,7 @@ import CheckoutAddr from './pages/checkoutAddr/CheckoutAddr';
 import Profile from './pages/profile/Profile';
 import OrderProduct from './Components/orderProduct/OrderProduct';
 import ProfileEdit from './Components/profileEdit/ProfileEdit';
+import Test from './Admin/Test';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <div className="mainPages">
 
         <Routes>
+          <Route path='/test' element={<Test />} />
           <Route path='/' element={<Home />} />
           <Route path='/BrowseProduct' element={<BrowseProduct />} />
           <Route path='/ProductDetail' element={<ProductDetail />} />
