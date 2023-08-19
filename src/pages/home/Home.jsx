@@ -4,7 +4,7 @@ import men from './img/men.png'
 import pop1 from './img/pop1.jpg' 
 import pop2 from './img/pop2.jpg' 
 import vid from './video/vid.mp4'
-import Slider from '../../Components/Navbar/slider/Slider';
+import Slider from '../../Components/slider/Slider';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 

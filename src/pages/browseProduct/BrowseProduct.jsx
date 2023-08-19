@@ -1,5 +1,6 @@
 import React from 'react'
 import './browseProduct.scss';
+import { Link } from 'react-router-dom';
 
 export default function BrowseProduct() {
   return (
@@ -96,7 +97,7 @@ export default function BrowseProduct() {
               <h3>Nike Air Max Pulse</h3>
               <h2>₹ 13,958</h2>
             </div>
-            <div id="view">View</div>
+            <Link to="/ProductDetail" id="view">View</Link>
           </li>
           <li>
             <div id="img"><img src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/2058cb70-dd58-4b0b-b412-b2539559048b/air-max-pulse-shoes-QShhG8.png" alt="" /></div>
