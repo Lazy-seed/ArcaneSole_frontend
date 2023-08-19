@@ -21,8 +21,8 @@ export default function Navbar() {
                         <input type="text" placeholder='search...' />
                     </li>
 
-                    <li><FaHeart   id='icon'/></li>
-                    <li><FaShoppingBag   id='icon'/></li>
+                    <li><FaHeart id='icon'/></li>
+                    <li><Link to='/Bag'><FaShoppingBag id='icon'/></Link></li>
                     <li><img src={profie} alt="" srcset="" /></li>
                 </ul>
             </div>

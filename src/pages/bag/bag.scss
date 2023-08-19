@@ -1,0 +1,163 @@
+.bag {
+    display: flex;
+    margin-top: 30px;
+    justify-content: center;
+
+    .left {
+        width: 50%;
+
+        ul {
+            li {
+                display: flex;
+                border: solid 1px rgb(150, 148, 148);
+                border-radius: 10px;
+                margin: 10px 5px;
+
+                #img {
+                    border-radius: 10px;
+                    // width: 200px;
+                    width: 30%;
+                    height: 150px;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                #info {
+                    width: 40%;
+                    padding: 10px 20px;
+
+                    h1 {
+                        font-size: 20px;
+                        font-weight: 700;
+                        color: #2b2a2a;
+                        margin-top: 5px;
+                    }
+
+                    h3 {
+                        font-size: 15px;
+                        font-weight: 500;
+                        color: #555555;
+                        margin-top: 5px;
+                    }
+
+                    #drop-d {
+                        margin-top: 20px;
+
+                        #size {
+                            margin-right: 10px;
+
+                            select {
+                                width: 50px;
+                                padding: 1px 5px;
+                                font-size: 15px;
+                                border: solid 1px rgb(199, 194, 194);
+                                border-radius: 5px;
+                            }
+                        }
+
+                        #qty {
+                            select {
+                                width: 50px;
+                                padding: 1px 5px;
+                                font-size: 15px;
+                                border: solid 1px rgb(199, 194, 194);
+                                border-radius: 5px;
+                            }
+                        }
+                    }
+                }
+
+                #del {
+                    width: 30%;
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: end;
+
+                    h3 {
+                        font-size: 16px;
+                    }
+
+                    #icon {
+                        font-size: 30px;
+                        // margin: 10px;
+                        color: #444343;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            font-size: 32px;
+                            color: #c70000;
+
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+
+
+
+    // right
+
+    .right {
+        width: 30%;
+
+        h2 {
+            margin: 10px 20px;
+        }
+
+        #bill {
+            // border: solid 1px black;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            ul {
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 15px 10px;
+
+                    h3 {
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+
+
+            #checkOut-btn {
+
+                margin: auto;
+                height: 50px;
+                color: #fff;
+                background: rgb(0, 0, 0);
+                border-radius: 25px;
+                border: none;
+                margin: 5px 0;
+                letter-spacing: 1px;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 0.8;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

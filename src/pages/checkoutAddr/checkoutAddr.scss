@@ -1,0 +1,114 @@
+.checkoutAddr {
+    margin-top: 40px;
+
+    .container {
+        position: relative;
+        width: 704px;
+        // height: 369px;
+        background: #FFFFFFFF;
+        border-radius: 6px;
+        margin: auto;
+
+        h2 {
+            margin: 20px 0;
+        }
+
+        /* textbox1 2 */
+        .textbox1 {
+            // position: absolute;
+            // top: 100px;
+            // left: 32px;
+            // opacity: 1;
+
+
+            input {
+                width: 640px;
+                height: 50px;
+                padding: 15px;
+                font-family: Inter;
+                font-size: 20px;
+                background: #F3F4F6FF;
+                border-radius: 4px;
+                border: solid 1px rgb(124, 124, 124);
+                outline: none;
+            }
+
+            .label1 {
+                font-size: 20px;
+            }
+        }
+
+
+        // drpdoen
+        #drop-d {
+            margin-top: 20px;
+
+            label {
+                margin-right: 10px;
+                font-size: 20px;
+
+                select {
+                    width: 30%;
+                    margin-left: 10px;
+                    padding: 5px 5px;
+                    font-size: 15px;
+                    border: solid 1px rgb(199, 194, 194);
+                    border-radius: 5px;
+                    font-size: 20px;
+                    background: #F3F4F6FF;
+
+                }
+            }
+
+
+        }
+
+        // text 2 pincode
+        .text2 {
+            .label3 {
+                margin-top: 20px;
+                font-size: 20px;
+            }
+
+            input {
+                width: 200px;
+                height: 50px;
+                padding: 15px;
+                font-family: Inter;
+                font-size: 20px;
+                background: #F3F4F6FF;
+                border-radius: 4px;
+                border: solid 1px rgb(124, 124, 124);
+                outline: none;
+            }
+        }
+
+        // btn
+        a {
+
+            margin: 20px auto;
+            width: 80%;
+            height: 50px;
+            color: #fff;
+            background: rgb(0, 0, 0);
+            border-radius: 25px;
+            border: none;
+            letter-spacing: 1px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.8;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+    }
+
+
+
+}
