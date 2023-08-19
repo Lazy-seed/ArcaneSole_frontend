@@ -23,7 +23,7 @@ export default function Navbar() {
 
                     <li><FaHeart id='icon'/></li>
                     <li><Link to='/Bag'><FaShoppingBag id='icon'/></Link></li>
-                    <li><img src={profie} alt="" srcset="" /></li>
+                    <li><Link to='/Profile'><img src={profie} alt=""  /></Link></li>
                 </ul>
             </div>
         </div>
