@@ -68,7 +68,7 @@ export default function Test() {
                 </label>
             </label>
 
-            <button onClick={sub}>submit</button>
+            <button onClick={sub} type='submit'>submit</button>
         </div>
 
     );
@@ -106,6 +106,11 @@ export default function Test() {
         const result = axios.post(`${BASE_URL}/api/addProduct`, data, { withCredentials: true })
         .then((res) => {
           console.log(res.data)
-        })
+        });
+
+        window.location.reload();
+
+        
+
     }
 }

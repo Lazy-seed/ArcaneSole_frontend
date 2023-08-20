@@ -1,8 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './browseProduct.scss';
 import { Link } from 'react-router-dom';
+import axios from "axios";
+
+
 
 export default function BrowseProduct() {
+
+  const BASE_URL = 'http://localhost:8000';
+
+  const [catg, setcatg] = useState('all')
+  useEffect(() => {
+    const result = axios.get(`${BASE_URL}/api/allProducts/${catg}`, { withCredentials: true })
+      .then((res) => {
+        setData(res.data.products);
+        console.log(res.data);
+      });
+    console.log(catg);
+
+  }, [catg])
+
+
+  const [Data, setData] = useState('')
+
+  // if (Data == '') {
+  //   return null;
+  // }
+
   return (
     <div className='browseProduct'>
 
@@ -26,24 +50,24 @@ export default function BrowseProduct() {
           <h2>Category</h2>
           <ul>
             <li>
-              <label for="all">All</label>
+              <label htmlFor="all">All</label>
               <input id="all" type="radio" name='catg' />
             </li>
             <li>
-              <label for="mens">Mens</label>
-              <input id="mens" type="radio" name='catg' />
+              <label htmlFor="mens">Mens</label>
+              <input id="mens" type="radio" name='catg' onClick={() => setcatg('men')} />
             </li>
             <li>
-              <label for="womens">Womens</label>
-              <input id="womens" type="radio" name='catg' />
+              <label htmlFor="womens">Womens</label>
+              <input id="womens" type="radio" name='catg' onClick={() => setcatg('women')} />
             </li>
             <li>
-              <label for="girls">Girls</label>
-              <input id="girls" type="radio" name='catg' />
+              <label htmlFor="girls">Girls</label>
+              <input id="girls" type="radio" name='catg' onClick={() => setcatg('girl')} />
             </li>
             <li>
-              <label for="boys">Boys</label>
-              <input id="boys" type="radio" name='catg' />
+              <label htmlFor="boys">Boys</label>
+              <input id="boys" type="radio" name='catg' onClick={() => setcatg('boy')} />
             </li>
 
           </ul>
@@ -51,31 +75,31 @@ export default function BrowseProduct() {
 
 
         {/* price */}
-        <div className="catg">
+        {/* <div className="catg">
           <h2>Price Range</h2>
-          <ul>
+          <ul onChange={as}>
             <li>
-              <label for="pr1">All</label>
+              <label htmlFor="pr1">All</label>
               <input id="pr1" name='price' type="radio" />
             </li>
             <li>
-              <label for="pr1">0 - 1999</label>
+              <label htmlFor="pr1">0 - 1999</label>
               <input id="pr1" name='price' type="radio" />
             </li>
             <li>
-              <label for="pr2">2000 - 4999</label>
+              <label htmlFor="pr2">2000 - 4999</label>
               <input id="pr2" name='price' type="radio" />
             </li>
             <li>
-              <label for="pr3">5000 - 9999</label>
+              <label htmlFor="pr3">5000 - 9999</label>
               <input id="pr3" name='price' type="radio" />
             </li>
             <li>
-              <label for="pr4">1000+ </label>
+              <label htmlFor="pr4">10000+ </label>
               <input id="pr4" name='price' type="radio" />
             </li>
           </ul>
-        </div>
+        </div> */}
 
 
 
@@ -89,56 +113,23 @@ export default function BrowseProduct() {
 
 
 
+          {Data && Data.map((item, index) => {
 
 
-          <li>
-            <div id="img"><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/176ae550-15e0-4e85-abfd-f5a1685f2031/air-max-pulse-shoes-QShhG8.png" alt="" /></div>
-            <div id="info">
-              <h3>Nike Air Max Pulse</h3>
-              <h2>₹ 13,958</h2>
-            </div>
-            <Link to="/ProductDetail" id="view">View</Link>
-          </li>
-          <li>
-            <div id="img"><img src="https://static.nike.com/a/images/t_PDP_864_v1,f_auto,q_auto:eco/2058cb70-dd58-4b0b-b412-b2539559048b/air-max-pulse-shoes-QShhG8.png" alt="" /></div>
-            <div id="info">
-              <h3>Nike Air Max Pulse</h3>
-              <h2>₹ 13,958</h2>
-            </div>
-            <div id="view">View</div>
-          </li>
-          <li>
-            <div id="img"><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/176ae550-15e0-4e85-abfd-f5a1685f2031/air-max-pulse-shoes-QShhG8.png" alt="" /></div>
-            <div id="info">
-              <h3>Nike Air Max Pulse</h3>
-              <h2>₹ 13,958</h2>
-            </div>
-            <div id="view">View</div>
-          </li>
-          <li>
-            <div id="img"><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/176ae550-15e0-4e85-abfd-f5a1685f2031/air-max-pulse-shoes-QShhG8.png" alt="" /></div>
-            <div id="info">
-              <h3>Nike Air Max Pulse</h3>
-              <h2>₹ 13,958</h2>
-            </div>
-            <div id="view">View</div>
-          </li>
-          <li>
-            <div id="img"><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/176ae550-15e0-4e85-abfd-f5a1685f2031/air-max-pulse-shoes-QShhG8.png" alt="" /></div>
-            <div id="info">
-              <h3>Nike Air Max Pulse</h3>
-              <h2>₹ 13,958</h2>
-            </div>
-            <div id="view">View</div>
-          </li>
-          <li>
-            <div id="img"><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/176ae550-15e0-4e85-abfd-f5a1685f2031/air-max-pulse-shoes-QShhG8.png" alt="" /></div>
-            <div id="info">
-              <h3>Nike Air Max Pulse</h3>
-              <h2>₹ 13,958</h2>
-            </div>
-            <div id="view">View</div>
-          </li>
+            return (
+              <li key={index}>
+                <div id="img"><img src={item.img1} alt="" /></div>
+                <div id="info">
+                  <h3>{item.name}</h3>
+                  <h2>₹ {item.price}</h2>
+                </div>
+                <Link to={`/ProductDetail/${item._id}`} id="view">View</Link>
+              </li>
+            )
+          })}
+
+
+
 
 
 
@@ -151,4 +142,9 @@ export default function BrowseProduct() {
 
     </div>
   )
+
+
+  function as(params) {
+    console.log("asdd");
+  }
 }

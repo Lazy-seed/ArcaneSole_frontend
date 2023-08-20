@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import './productDetail.scss';
+import axios from "axios";
 
 
 import { HiHeart} from "react-icons/hi";
+import { useParams } from 'react-router-dom';
 
 export default function ProductDetail() {
+    const {id} =useParams();
+    const BASE_URL = 'http://localhost:8000';
+
+    useEffect(() => {
+        const result = axios.get(`${BASE_URL}/api/singleShoe/${id}`, { withCredentials: true })
+          .then((res) => {
+            setData(res.data.data);
+            console.log(res.data.data);
+            setimg(res.data.data.img1)
+          });
+    
+      }, [])
+
+  const [Data, setData] = useState('')
+  const [img, setimg] = useState('')
+
+  if (Data=='') {
+    return null;
+  }
     return (
         <div className='productDetail'>
 
@@ -14,13 +35,14 @@ export default function ProductDetail() {
                 <div className="left">
                     <div className="mini_Img">
                         <ul>
-                            <li><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/1ab1dbef-7a86-4ae7-969b-efc887c31fda/motiva-walking-shoes-dCcsVX.png" alt="" srcset="" /></li>
-                            <li><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b019b054-5872-4017-b745-40e1ad200f62/motiva-walking-shoes-dCcsVX.png" alt="" srcset="" /></li>
-                            <li><img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/434e4bd4-dc3d-4c98-903b-63e6b6474162/motiva-walking-shoes-dCcsVX.png" alt="" srcset="" /></li>
+                            <li><img src={Data.img1} alt=""  onMouseEnter={()=>setimg(Data.img1)}/></li>
+                            <li><img src={Data.img2} alt=""  onMouseEnter={()=>setimg(Data.img2)}/></li>
+                            <li><img src={Data.img3} alt=""  onMouseEnter={()=>setimg(Data.img3)}/></li>
+                            <li><img src={Data.img4} alt=""  onMouseEnter={()=>setimg(Data.img4)}/></li>
                         </ul>
                     </div>
                     <div className="lar_Img">
-                        <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/77128b3e-515b-4327-b00c-ac549e9539cb/motiva-walking-shoes-dCcsVX.png" alt="" srcset="" />
+                        <img src={img} alt=""  />
                     </div>
                 </div>
 
@@ -29,9 +51,9 @@ export default function ProductDetail() {
                 <div className="right">
 
                     <div id="info">
-                        <h1>Nike Motiva Premium</h1>
+                        <h1>{Data.name}</h1>
                         <h3>Women's Premium Walking Shoes</h3>
-                        <h2>MRP : ₹ 9,695</h2>
+                        <h2>MRP : ₹ {Data.price}</h2>
                         <p>incl. of taxes</p>
                         <p>(Also includes all applicable duties)</p>
                     </div>
