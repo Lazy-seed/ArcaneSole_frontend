@@ -11,17 +11,29 @@ import axios from 'axios';
 export default function Navbar() {
 
 
-    const [ShowModal, setShowModal] = useState('register');
+
+    useEffect(() => {
+
+        axios.get('http://localhost:8000/api/userInfo', { withCredentials: true }).then((response) => {
+            console.log(response.data.success);
+            setIsLogin(response.data.success)
+        })
+    }, [])
+
+
+
+    const [IsLogin, setIsLogin] = useState(false);
+    const [ShowModal, setShowModal] = useState(false);
     const [ShowError, setShowError] = useState(false);
     const [Err_tit, setErr_tit] = useState('');
     const [Err_msg, setErr_msg] = useState('');
- 
+
 
 
     setTimeout(() => {
         setShowError(false)
     }, 5000);
-   
+
 
 
 
@@ -41,7 +53,8 @@ export default function Navbar() {
 
                     <li><FaHeart id='icon' /></li>
                     <li><Link to='/Bag'><FaShoppingBag id='icon' /></Link></li>
-                    <li><Link to='/Profile'><img src={profie} alt="" /></Link></li>
+                    {IsLogin && <li><Link to='/Profile'><img src={profie} alt="" /></Link></li> }
+                    {IsLogin===false && <li onClick={() => setShowModal('login')}><img src={profie} alt="" /></li> }
                 </ul>
             </div>
 
@@ -126,7 +139,7 @@ export default function Navbar() {
         const data = { fname, email, password }
 
 
-        const result = axios.post('http://localhost:8000/api/newUser', data, { withCredentials: true }).then((response) => {
+          axios.post('http://localhost:8000/api/newUser', data, { withCredentials: true }).then((response) => {
             console.log(response);
             setErr_tit("Success");
             setErr_msg("User has been Register successfully")
@@ -151,23 +164,25 @@ export default function Navbar() {
         }
         const data = { email, password }
 
-        const result = axios.post('http://localhost:8000/api/login', data, { withCredentials: true }).then((response) => {
+          axios.post('http://localhost:8000/api/login', data, { withCredentials: true }).then((response) => {
             console.log(response.data.success);
 
-            if (response.data.success===false) {
+            if (response.data.success === false) {
                 setErr_tit("Error");
                 setErr_msg("Invalid Credentials")
                 setShowError(true);
-            }else{
+            } else {
                 setErr_tit("Success");
                 setErr_msg("Login successfull")
                 setShowError(true);
                 setShowModal(false);
             }
-        }).catch((err) => { console.log(err);
+        }).catch((err) => {
+            console.log(err);
             setErr_tit("Error");
             setErr_msg("User not Found")
-            setShowError(true); })
+            setShowError(true);
+        })
 
     }
 }

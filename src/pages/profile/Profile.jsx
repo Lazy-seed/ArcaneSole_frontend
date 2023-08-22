@@ -1,14 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './profile.scss';
 import profile from './profie.jpg';
 import { CgProfile } from "react-icons/cg";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiHelpCircle } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
-import { CgTrash } from 'react-icons/cg'
 import { Link, Outlet } from 'react-router-dom';
-import OrderProduct from '../../Components/orderProduct/OrderProduct';
+import axios from 'axios';
+
 export default function Profile() {
+    useEffect(() => {
+
+        axios.get('http://localhost:8000/api/userInfo', { withCredentials: true }).then((response) => {
+            console.log(response.data);
+            setUserInfo(response.data.userInfo)
+        })
+    }, [])
+
+    const [UserInfo, setUserInfo] = useState('')
+
+
+    if (UserInfo === '') {
+        return null;
+    }
     return (
         <div className='profile'>
 
@@ -22,16 +36,16 @@ export default function Profile() {
                         <li>
                             <img src={profile} alt="" />
                             <div id="info">
-                                <h3>Devanshi</h3>
-                                <h4>example@gmail.com</h4>
+                                <h3>{UserInfo.fname} {UserInfo.lname}</h3>
+                                <h4>{UserInfo.email}</h4>
                             </div>
                         </li>
                         <hr />
                         <li>
-                           <Link to='/Profile/edit'> <CgProfile id='icon' /> <h2>Edit Profile</h2></Link>
+                            <Link to='/Profile/edit'> <CgProfile id='icon' /> <h2>Edit Profile</h2></Link>
                         </li>
                         <li>
-                        <Link to='/Profile/order'><TbTruckDelivery id='icon' /> <h2>Orders</h2></Link>
+                            <Link to='/Profile/order'><TbTruckDelivery id='icon' /> <h2>Orders</h2></Link>
                         </li>
                         <li>
                             <BiHelpCircle id='icon' /> <h2>Help</h2>
@@ -47,7 +61,7 @@ export default function Profile() {
 
             {/* right ------------------------------------------------------------- */}
             <div className="right">
-               <Outlet/>
+                <Outlet />
 
             </div>
 

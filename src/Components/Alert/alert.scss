@@ -1,0 +1,29 @@
+.alert{
+    z-index: 10;
+    .error_msg {
+        position: absolute;
+        width: 60%;
+        left: 50%;
+        top: 100px;
+        transform: translateX(-50%);
+        background: #f4e91d;
+        text-align: center;
+        padding: 20px;
+        border-radius: 5px;
+
+        p {
+            font-size: 20px;
+        }
+
+        #alert_icon {
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            font-size: 26px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+    }
+}
