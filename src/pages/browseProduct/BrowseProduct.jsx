@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import './browseProduct.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
 
 
 export default function BrowseProduct() {
 
+  const {ctg}= useParams();
+  // console.log(ctg);
   const BASE_URL = 'http://localhost:8000';
 
-  const [catg, setcatg] = useState('all')
+  const [catg, setcatg] = useState(ctg)
   useEffect(() => {
     const result = axios.get(`${BASE_URL}/api/allProducts/${catg}`, { withCredentials: true })
       .then((res) => {

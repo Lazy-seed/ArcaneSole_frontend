@@ -5,6 +5,7 @@ import profie from './img/profie.jpg'
 import { FaHeart } from "react-icons/fa";
 import { FaShoppingBag } from "react-icons/fa";
 import { RxCrossCircled } from "react-icons/rx";
+import { ImSearch } from "react-icons/im";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -47,10 +48,9 @@ export default function Navbar() {
             </Link>
             <div className="right">
                 <ul>
-                    <li>
-                        <input type="text" placeholder='search...' />
-                    </li>
+                   
 
+                    <li><ImSearch id='icon' /></li>
                     <li><FaHeart id='icon' /></li>
                     <li><Link to='/Bag'><FaShoppingBag id='icon' /></Link></li>
                     {IsLogin && <li><Link to='/Profile'><img src={profie} alt="" /></Link></li> }

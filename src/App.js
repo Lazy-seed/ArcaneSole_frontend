@@ -10,6 +10,7 @@ import Profile from './pages/profile/Profile';
 import OrderProduct from './Components/orderProduct/OrderProduct';
 import ProfileEdit from './Components/profileEdit/ProfileEdit';
 import Test from './Admin/Test';
+import Page_not_found from './pages/page_not_found/Page_not_found';
 
 function App() {
   return (
@@ -19,19 +20,20 @@ function App() {
       <div className="mainPages">
 
         <Routes>
-          <Route path='/test' element={<Test />} />
-          <Route path='/' element={<Home />} />
-          <Route path='/BrowseProduct' element={<BrowseProduct />} />
-          <Route path='/ProductDetail/:id' element={<ProductDetail />} />
-          <Route path='/Bag' element={<Bag />} />
-          <Route path='/CheckoutAddr' element={<CheckoutAddr />} />
+          <Route path='/test' exact={true} element={<Test />} />
+          <Route path='/' exact={true} element={<Home />} />
+          <Route path='/BrowseProduct/:ctg' exact={true} element={<BrowseProduct />} />
+          <Route path='/ProductDetail/:id' exact={true} element={<ProductDetail />} />
+          <Route path='/Bag' exact={true} element={<Bag />} />
+          <Route path='/CheckoutAddr' exact={true} element={<CheckoutAddr />} />
 
           
-          <Route path='/Profile' element={<Profile />} >
-            <Route path='/Profile/edit' element={<ProfileEdit/>} />
-            <Route path='/Profile/order' element={<OrderProduct/>} />
+          <Route path='/Profile' exact={true} element={<Profile />} >
+            <Route path='/Profile/edit' exact={true} element={<ProfileEdit/>} />
+            <Route path='/Profile/order' exact={true} element={<OrderProduct/>} />
           </Route>
 
+          <Route path='*' exact={true} element={<Page_not_found/>} />
 
         </Routes>
 

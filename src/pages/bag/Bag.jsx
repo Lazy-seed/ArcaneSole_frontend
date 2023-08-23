@@ -7,16 +7,18 @@ import Alert from '../../Components/Alert/Alert';
 
 export default function Bag() {
     const BASE_URL = 'http://localhost:8000';
-    
+
     useEffect(() => {
         const result = axios.get(`${BASE_URL}/api/getBag`, { withCredentials: true })
-        .then((res) => {
-            setData(res.data.bagItems);
-            console.log(res.data);
-        });
-        
+            .then((res) => {
+                setData(res.data.bagItems);
+                console.log(res.data);
+            });
+
     }, [])
     const [Data, setData] = useState('')
+    const [Total_price, setTotal_price] = useState(0);
+    let TotalPrice = 0;
     const [Err_tit, setErr_tit] = useState('');
     const [Err_msg, setErr_msg] = useState('');
     const [ShowAlert, setShowAlert] = useState(false);
@@ -28,17 +30,17 @@ export default function Bag() {
     return (
         <div className='bag'>
             {
-                ShowAlert && <Alert Err_tit={Err_tit} Err_msg={Err_msg} setShowAlert={setShowAlert}/>
+                ShowAlert && <Alert Err_tit={Err_tit} Err_msg={Err_msg} setShowAlert={setShowAlert} />
             }
-            
+
             {/* left */}
             <div className="left">
                 <h2>Bag</h2>
                 <ul>
 
                     {Data && Data.map((item, index) => {
+                        TotalPrice += item.price * item.qty;
                         return (
-
                             <li key={index}>
                                 <div id="img"><img src={item.img1} alt="" /></div>
                                 <div id="info">
@@ -48,7 +50,7 @@ export default function Bag() {
 
                                     <div id="drop-d">
                                         <label htmlFor="size" id='size'>Size
-                                            <select name="size" id="size"  defaultValue={item.size}>
+                                            <select name="size" id="size_v" defaultValue={item.size} onChange={(e) => { updBagSize(item._id, e.target.value); }}>
                                                 <option value="6">6</option>
                                                 <option value="7">7</option>
                                                 <option value="8">8</option>
@@ -57,7 +59,7 @@ export default function Bag() {
                                                 <option value="11">11</option>
                                             </select></label>
                                         <label htmlFor="qty" id='qty'>Quantity
-                                            <select name="qty" id="qty" defaultValue={item.qty}>
+                                            <select name="qty" id="qty_v" defaultValue={item.qty} onChange={(e) => updBagQty(item._id,e.target.value)}>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -87,10 +89,10 @@ export default function Bag() {
                 <h2>Summary</h2>
                 <div id="bill">
                     <ul>
-                        <li><h3>Subtotal</h3><h3>₹ 27,495</h3></li>
+                        <li><h3>Subtotal</h3><h3>₹ {TotalPrice}</h3></li>
                         <li><h3>Estimated Delivery & Handling</h3><h3>₹ 495</h3></li>
                         <hr />
-                        <li><h3>Total</h3><h3>₹ 27,495</h3></li>
+                        <li><h3>Total</h3><h3>₹ {TotalPrice + 495}</h3></li>
                         <hr />
 
                     </ul>
@@ -114,11 +116,69 @@ export default function Bag() {
                 setShowAlert(true);
 
                 axios.get(`${BASE_URL}/api/getBag`, { withCredentials: true })
-                .then((res) => {
-                    setData(res.data.bagItems);
-                    console.log(res.data);
-                });
+                    .then((res) => {
+                        setData(res.data.bagItems);
+                        console.log(res.data);
+                    });
 
             });
+    }
+
+
+    function updBagSize(id, size) {
+        // const size = document.getElementById("size_v").value;
+        // const qty = document.getElementById("qty_v").value;
+
+
+        const data = {
+            pID: id,
+            size: size
+        }
+
+
+        axios.post(`${BASE_URL}/api/uptBag/`, data, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                setErr_tit("Updated");
+                setErr_msg("Item has been updated");
+                setShowAlert(true);
+
+                axios.get(`${BASE_URL}/api/getBag`, { withCredentials: true })
+                    .then((res) => {
+                        setData(res.data.bagItems);
+                        console.log(res.data);
+                    });
+
+            });
+
+    }
+    function updBagQty(id, qty) {
+        // const size = document.getElementById("size_v").value;
+        // const qty = document.getElementById("qty_v").value;
+
+
+        const data = {
+            pID: id,
+            qty: qty
+        }
+
+        console.log(data);
+
+        // return null
+        axios.post(`${BASE_URL}/api/uptBag/`, data, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                setErr_tit("Updated");
+                setErr_msg("Item has been updated");
+                setShowAlert(true);
+
+                axios.get(`${BASE_URL}/api/getBag`, { withCredentials: true })
+                    .then((res) => {
+                        setData(res.data.bagItems);
+                        console.log(res.data);
+                    });
+
+            });
+
     }
 }
