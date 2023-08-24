@@ -3,7 +3,9 @@ import axios from "axios";
 import './bag.scss';
 import { CgTrash } from 'react-icons/cg'
 import { Link } from 'react-router-dom';
+import logo from './logo.png';
 import Alert from '../../Components/Alert/Alert';
+import Loader from '../../Components/Loader/Loader';
 
 export default function Bag() {
     const BASE_URL = 'http://localhost:8000';
@@ -16,15 +18,94 @@ export default function Bag() {
             });
 
     }, [])
+
+    // payment
+    function loadScript(src) {
+        return new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => { resolve(true); };
+            script.onerror = () => { resolve(false); };
+            document.body.appendChild(script);
+        });
+    }
+
+    async function displayRazorpay() {
+        document.getElementById("checkOut-btn").innerText="Loading...";
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+        );
+
+        if (!res) {
+            alert("Razorpay SDK failed to load. Are you online?");
+            return;
+        }
+
+
+
+
+        // amount upadte
+        const amt = { amt: TotalPrice+DeliveryPrice }
+        // creating a new order
+        const result = await axios.post("http://localhost:8000/payment/orders", amt, { withCredentials: true });
+
+        if (!result) {
+            alert("Server error. Are you online?");
+            return;
+        }
+
+        // Getting the order details back
+        const { amount, id: order_id, currency } = result.data;
+
+
+        const options = {
+            key: "rzp_test_VriOzbggcgpNkd", // Enter the Key ID generated from the Dashboard
+            amount: amount.toString(),
+            currency: currency,
+            name: "ArcaneSole",
+            description: "Test Transaction",
+            image:logo,
+            order_id: order_id,
+            handler: async function (response) {
+                const data = {
+                    orderCreationId: order_id,
+                    razorpayPaymentId: response.razorpay_payment_id,
+                    razorpayOrderId: response.razorpay_order_id,
+                    razorpaySignature: response.razorpay_signature,
+                };
+
+                const result = await axios.post("http://localhost:8000/payment/success", data);
+
+                alert(result.data.msg); 
+            },
+            notes: {
+                address: "Soumya Dey Corporate Office",
+            },
+            theme: {
+                color: "#61dafb",
+            },
+        };
+
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+        document.getElementById("checkOut-btn").innerText="Checkout";
+
+
+    }
+
+
+
+    // const 
+
     const [Data, setData] = useState('')
-    const [Total_price, setTotal_price] = useState(0);
     let TotalPrice = 0;
+    let DeliveryPrice = 495;
     const [Err_tit, setErr_tit] = useState('');
     const [Err_msg, setErr_msg] = useState('');
     const [ShowAlert, setShowAlert] = useState(false);
 
     if (Data === '') {
-        return null;
+        return <Loader/>;
     }
 
     return (
@@ -59,7 +140,7 @@ export default function Bag() {
                                                 <option value="11">11</option>
                                             </select></label>
                                         <label htmlFor="qty" id='qty'>Quantity
-                                            <select name="qty" id="qty_v" defaultValue={item.qty} onChange={(e) => updBagQty(item._id,e.target.value)}>
+                                            <select name="qty" id="qty_v" defaultValue={item.qty} onChange={(e) => updBagQty(item._id, e.target.value)}>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -90,14 +171,14 @@ export default function Bag() {
                 <div id="bill">
                     <ul>
                         <li><h3>Subtotal</h3><h3>₹ {TotalPrice}</h3></li>
-                        <li><h3>Estimated Delivery & Handling</h3><h3>₹ 495</h3></li>
+                        <li><h3>Estimated Delivery & Handling</h3><h3>₹ {DeliveryPrice}</h3></li>
                         <hr />
-                        <li><h3>Total</h3><h3>₹ {TotalPrice + 495}</h3></li>
+                        <li><h3>Total</h3><h3>₹ {TotalPrice + DeliveryPrice}</h3></li>
                         <hr />
 
                     </ul>
 
-                    <Link to='/checkoutAddr' id='checkOut-btn'>Checkout</Link>
+                    <button onClick={displayRazorpay} id='checkOut-btn'>Checkout</button>
                 </div>
 
             </div>

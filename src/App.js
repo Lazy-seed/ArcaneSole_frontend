@@ -11,6 +11,7 @@ import OrderProduct from './Components/orderProduct/OrderProduct';
 import ProfileEdit from './Components/profileEdit/ProfileEdit';
 import Test from './Admin/Test';
 import Page_not_found from './pages/page_not_found/Page_not_found';
+import Successful from './pages/successful/Successful';
 
 function App() {
   return (
@@ -24,9 +25,10 @@ function App() {
           <Route path='/' exact={true} element={<Home />} />
           <Route path='/BrowseProduct/:ctg' exact={true} element={<BrowseProduct />} />
           <Route path='/ProductDetail/:id' exact={true} element={<ProductDetail />} />
+          
+
           <Route path='/Bag' exact={true} element={<Bag />} />
           <Route path='/CheckoutAddr' exact={true} element={<CheckoutAddr />} />
-
           
           <Route path='/Profile' exact={true} element={<Profile />} >
             <Route path='/Profile/edit' exact={true} element={<ProfileEdit/>} />
@@ -34,6 +36,7 @@ function App() {
           </Route>
 
           <Route path='*' exact={true} element={<Page_not_found/>} />
+          <Route path='/orderSuccess' exact={true} element={<Successful/>} />
 
         </Routes>
 

@@ -48,13 +48,14 @@ export default function Navbar() {
             </Link>
             <div className="right">
                 <ul>
-                   
 
                     <li><ImSearch id='icon' /></li>
                     <li><FaHeart id='icon' /></li>
                     <li><Link to='/Bag'><FaShoppingBag id='icon' /></Link></li>
                     {IsLogin && <li><Link to='/Profile'><img src={profie} alt="" /></Link></li> }
-                    {IsLogin===false && <li onClick={() => setShowModal('login')}><img src={profie} alt="" /></li> }
+                    {IsLogin===false && <li onClick={() => setShowModal('login')}><button className='login-btn'>Login</button></li> }
+           
+           
                 </ul>
             </div>
 
@@ -176,6 +177,8 @@ export default function Navbar() {
                 setErr_msg("Login successfull")
                 setShowError(true);
                 setShowModal(false);
+                window.location.reload();
+
             }
         }).catch((err) => {
             console.log(err);
