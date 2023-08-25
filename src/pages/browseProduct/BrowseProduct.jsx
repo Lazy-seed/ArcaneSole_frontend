@@ -1,31 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import './browseProduct.scss';
 import { Link, useParams } from 'react-router-dom';
+import Loader from '../../Components/Loader/Loader'
 import axios from "axios";
 
 
 
 export default function BrowseProduct() {
 
-  const {ctg}= useParams();
+  const { ctg } = useParams();
+  
+
   // console.log(ctg);
   const BASE_URL = 'http://localhost:8000';
 
-  const [catg, setcatg] = useState(ctg)
+  const [catg, setcatg] = useState(ctg);
+  const [IsLoading, setIsLoading] = useState(true);
+
+
   useEffect(() => {
-    const result = axios.get(`${BASE_URL}/api/allProducts/${catg}`, { withCredentials: true })
+    setIsLoading(true)
+    axios.get(`${BASE_URL}/api/allProducts/${catg}`, { withCredentials: true })
       .then((res) => {
         setData(res.data.products);
         console.log(res.data);
+        setIsLoading(false)
       });
     console.log(catg);
 
   }, [catg])
 
 
+
+
+
+
+
+
+
+  
   const [Data, setData] = useState('')
 
-  // if (Data == '') {
+  // if (Data === '') {
   //   return null;
   // }
 
@@ -34,6 +50,17 @@ export default function BrowseProduct() {
 
       {/* filter */}
       <div className="left">
+
+        {/* catgeory */}
+
+        <ul className='catg'>
+          <Link to='/BrowseProduct/all'><li onClick={()=>{setcatg('all'); ;}} className={catg==='all'?'active':''}>All</li></Link>
+          <Link to='/BrowseProduct/men'><li onClick={()=>{setcatg('men'); ;}} className={catg==='men'?'active':''}>Mens</li></Link>
+          <Link to='/BrowseProduct/women'><li onClick={()=>{setcatg('women'); ;}} className={catg==='women'?'active':''}>Womens</li></Link>
+          <Link to='/BrowseProduct/girl'><li onClick={()=>{setcatg('girl'); ;}} className={catg==='girl'?'active':''}>Girls</li></Link>
+          <Link to='/BrowseProduct/boy'><li onClick={()=>{setcatg('boy'); ;}} className={catg==='boy'?'active':''}>Boys</li></Link>
+        </ul>
+
 
 
         {/* sort by */}
@@ -47,64 +74,6 @@ export default function BrowseProduct() {
           </select>
         </div>
 
-        {/* catgeory */}
-        <div className="catg">
-          <h2>Category</h2>
-          <ul>
-            <li>
-              <label htmlFor="all">All</label>
-              <input id="all" type="radio" name='catg' />
-            </li>
-            <li>
-              <label htmlFor="mens">Mens</label>
-              <input id="mens" type="radio" name='catg' onClick={() => setcatg('men')} />
-            </li>
-            <li>
-              <label htmlFor="womens">Womens</label>
-              <input id="womens" type="radio" name='catg' onClick={() => setcatg('women')} />
-            </li>
-            <li>
-              <label htmlFor="girls">Girls</label>
-              <input id="girls" type="radio" name='catg' onClick={() => setcatg('girl')} />
-            </li>
-            <li>
-              <label htmlFor="boys">Boys</label>
-              <input id="boys" type="radio" name='catg' onClick={() => setcatg('boy')} />
-            </li>
-
-          </ul>
-        </div>
-
-
-        {/* price */}
-        {/* <div className="catg">
-          <h2>Price Range</h2>
-          <ul onChange={as}>
-            <li>
-              <label htmlFor="pr1">All</label>
-              <input id="pr1" name='price' type="radio" />
-            </li>
-            <li>
-              <label htmlFor="pr1">0 - 1999</label>
-              <input id="pr1" name='price' type="radio" />
-            </li>
-            <li>
-              <label htmlFor="pr2">2000 - 4999</label>
-              <input id="pr2" name='price' type="radio" />
-            </li>
-            <li>
-              <label htmlFor="pr3">5000 - 9999</label>
-              <input id="pr3" name='price' type="radio" />
-            </li>
-            <li>
-              <label htmlFor="pr4">10000+ </label>
-              <input id="pr4" name='price' type="radio" />
-            </li>
-          </ul>
-        </div> */}
-
-
-
 
       </div>
 
@@ -112,9 +81,9 @@ export default function BrowseProduct() {
       <div className="right">
 
         <ul>
+        
 
-
-
+{IsLoading && <Loader/> }
           {Data && Data.map((item, index) => {
 
 

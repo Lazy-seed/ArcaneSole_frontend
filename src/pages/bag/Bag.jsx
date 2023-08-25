@@ -31,7 +31,7 @@ export default function Bag() {
     }
 
     async function displayRazorpay() {
-        document.getElementById("checkOut-btn").innerText="Loading...";
+        document.getElementById("checkOut-btn").innerText = "Loading...";
         const res = await loadScript(
             "https://checkout.razorpay.com/v1/checkout.js"
         );
@@ -45,7 +45,7 @@ export default function Bag() {
 
 
         // amount upadte
-        const amt = { amt: TotalPrice+DeliveryPrice }
+        const amt = { amt: TotalPrice + DeliveryPrice }
         // creating a new order
         const result = await axios.post("http://localhost:8000/payment/orders", amt, { withCredentials: true });
 
@@ -64,7 +64,7 @@ export default function Bag() {
             currency: currency,
             name: "ArcaneSole",
             description: "Test Transaction",
-            image:logo,
+            image: logo,
             order_id: order_id,
             handler: async function (response) {
                 const data = {
@@ -76,7 +76,7 @@ export default function Bag() {
 
                 const result = await axios.post("http://localhost:8000/payment/success", data);
 
-                alert(result.data.msg); 
+                alert(result.data.msg);
             },
             notes: {
                 address: "Soumya Dey Corporate Office",
@@ -88,7 +88,7 @@ export default function Bag() {
 
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
-        document.getElementById("checkOut-btn").innerText="Checkout";
+        document.getElementById("checkOut-btn").innerText = "Checkout";
 
 
     }
@@ -105,7 +105,7 @@ export default function Bag() {
     const [ShowAlert, setShowAlert] = useState(false);
 
     if (Data === '') {
-        return <Loader/>;
+        return <Loader />;
     }
 
     return (
