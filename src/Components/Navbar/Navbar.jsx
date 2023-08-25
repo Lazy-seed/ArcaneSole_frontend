@@ -52,7 +52,7 @@ export default function Navbar({setisLogin}) {
             <div className="right">
                 <ul>
 
-                    <li><ImSearch id='icon' /></li>
+                    <li><Link to ='/search'><ImSearch id='icon' /></Link></li>
                     <li><FaHeart id='icon' /></li>
                     {IsLogin? <li><Link to='/Bag'><FaShoppingBag id='icon' /></Link></li>:<li onClick={() => setShowModal('login')}><FaShoppingBag id='icon' /></li> }
                     

@@ -13,6 +13,7 @@ import Test from './Admin/Test';
 import Page_not_found from './pages/page_not_found/Page_not_found';
 import Successful from './pages/successful/Successful';
 import { useState } from 'react';
+import Search from './pages/search/Search';
 
 function App() {
   const [isLogin, setisLogin] = useState(false)
@@ -30,7 +31,7 @@ function App() {
           <Route path='/' exact={true} element={<Home />} />
           <Route path='/BrowseProduct/:ctg' exact={true} element={<BrowseProduct />} />
           <Route path='/ProductDetail/:id' exact={true} element={<ProductDetail isLogin={isLogin} />} />
-
+<Route path='/search' element={<Search/>}/>
 
           
           {isLogin && <>

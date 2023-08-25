@@ -9,7 +9,7 @@ import axios from "axios";
 export default function BrowseProduct() {
 
   const { ctg } = useParams();
-  
+
 
   // console.log(ctg);
   const BASE_URL = 'http://localhost:8000';
@@ -27,7 +27,7 @@ export default function BrowseProduct() {
         setIsLoading(false)
       });
     console.log(catg);
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 
   }, [catg])
 
@@ -39,7 +39,7 @@ export default function BrowseProduct() {
 
 
 
-  
+
   const [Data, setData] = useState('')
 
   // if (Data === '') {
@@ -55,11 +55,11 @@ export default function BrowseProduct() {
         {/* catgeory */}
 
         <ul className='catg'>
-          <Link to='/BrowseProduct/all'><li onClick={()=>{setcatg('all'); ;}} className={catg==='all'?'active':''}>All</li></Link>
-          <Link to='/BrowseProduct/men'><li onClick={()=>{setcatg('men'); ;}} className={catg==='men'?'active':''}>Mens</li></Link>
-          <Link to='/BrowseProduct/women'><li onClick={()=>{setcatg('women'); ;}} className={catg==='women'?'active':''}>Womens</li></Link>
-          <Link to='/BrowseProduct/girl'><li onClick={()=>{setcatg('girl'); ;}} className={catg==='girl'?'active':''}>Girls</li></Link>
-          <Link to='/BrowseProduct/boy'><li onClick={()=>{setcatg('boy'); ;}} className={catg==='boy'?'active':''}>Boys</li></Link>
+          <Link to='/BrowseProduct/all'><li onClick={() => { setcatg('all');; }} className={catg === 'all' ? 'active' : ''}>All</li></Link>
+          <Link to='/BrowseProduct/men'><li onClick={() => { setcatg('men');; }} className={catg === 'men' ? 'active' : ''}>Mens</li></Link>
+          <Link to='/BrowseProduct/women'><li onClick={() => { setcatg('women');; }} className={catg === 'women' ? 'active' : ''}>Womens</li></Link>
+          <Link to='/BrowseProduct/girl'><li onClick={() => { setcatg('girl');; }} className={catg === 'girl' ? 'active' : ''}>Girls</li></Link>
+          <Link to='/BrowseProduct/boy'><li onClick={() => { setcatg('boy');; }} className={catg === 'boy' ? 'active' : ''}>Boys</li></Link>
         </ul>
 
 
@@ -82,9 +82,9 @@ export default function BrowseProduct() {
       <div className="right">
 
         <ul>
-        
 
-{IsLoading && <Loader/> }
+
+          {IsLoading && <Loader />}
           {Data && Data.map((item, index) => {
 
 
