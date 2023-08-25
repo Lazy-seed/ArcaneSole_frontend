@@ -11,17 +11,34 @@ import Loader from '../../Components/Loader/Loader';
 export default function ProductDetail({ isLogin }) {
     const { id } = useParams();
     const BASE_URL = 'http://localhost:8000';
-
     useEffect(() => {
-        const result = axios.get(`${BASE_URL}/api/singleShoe/${id}`, { withCredentials: true })
+        axios.get(`${BASE_URL}/api/singleShoe/${id}`, { withCredentials: true })
             .then((res) => {
                 setData(res.data.data);
                 console.log(res.data.data);
                 setimg(res.data.data.img1)
+                if (res.data.data.category === "girl") {
+                    setSize_Len([2,3,4,5]);
+                    setcatg_desc("Girl`s")
+                }
+                if (res.data.data.category ==="boy") {
+                    setSize_Len([3,4,5,6])
+                    setcatg_desc("Boy`s")
+                }
+                if (res.data.data.category ==="women") {
+                    setSize_Len([4,5,6,7,8,9])
+                    setcatg_desc("Women`s")
+                }
+                if (res.data.data.category ==="men")  {
+                    setSize_Len([6,7,8,9,10,11])
+                    setcatg_desc("Men`s")
+                }
             });
 
     }, [])
 
+    const [Size_Len, setSize_Len] = useState()
+    const [catg_desc, setcatg_desc] = useState()
     const [ShowAlert, setShowAlert] = useState(false)
     const [Data, setData] = useState('')
     const [img, setimg] = useState('')
@@ -36,6 +53,8 @@ export default function ProductDetail({ isLogin }) {
     if (Data == '') {
         return <Loader />;
     }
+
+    console.log(Size_Len);
     return (
         <div className='productDetail'>
             {ShowAlert &&
@@ -64,7 +83,7 @@ export default function ProductDetail({ isLogin }) {
 
                     <div id="info">
                         <h1>{Data.name}</h1>
-                        <h3>Women's Premium Walking Shoes</h3>
+                        <h3>{catg_desc} Premium Walking Shoes</h3>
                         <h2>MRP : ₹ {Data.price}</h2>
                         <p>incl. of taxes</p>
                         <p>(Also includes all applicable duties)</p>
@@ -73,12 +92,17 @@ export default function ProductDetail({ isLogin }) {
                     <div id="size">
                         <h2>Select Size</h2>
                         <ul>
-                            <li className={Size === 6 ? 'active' : ''} onClick={() => setSize(6)}>6</li>
-                            <li className={Size === 7 ? 'active' : ''} onClick={() => setSize(7)}>7</li>
+
+                            {Size_Len && Size_Len.map((size_no,index)=>{
+                                return(
+                                    <li key={index} className={Size === size_no ? 'active' : ''} onClick={() => setSize(size_no)}>{size_no}</li>
+                                )
+                            })}
+                            {/* <li className={Size === 7 ? 'active' : ''} onClick={() => setSize(7)}>7</li>
                             <li className={Size === 8 ? 'active' : ''} onClick={() => setSize(8)}>8</li>
                             <li className={Size === 9 ? 'active' : ''} onClick={() => setSize(9)}>9</li>
                             <li className={Size === 10 ? 'active' : ''} onClick={() => setSize(10)}>10</li>
-                            <li className={Size === 11 ? 'active' : ''} onClick={() => setSize(11)}>11</li>
+                            <li className={Size === 11 ? 'active' : ''} onClick={() => setSize(11)}>11</li> */}
                         </ul>
                     </div>
 
