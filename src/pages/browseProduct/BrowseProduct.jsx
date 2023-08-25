@@ -27,6 +27,7 @@ export default function BrowseProduct() {
         setIsLoading(false)
       });
     console.log(catg);
+    window.scrollTo(0,0);
 
   }, [catg])
 

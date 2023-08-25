@@ -5,8 +5,10 @@ import axios from "axios";
 
 import { HiHeart } from "react-icons/hi";
 import { useParams } from 'react-router-dom';
+import Alert from '../../Components/Alert/Alert';
+import Loader from '../../Components/Loader/Loader';
 
-export default function ProductDetail() {
+export default function ProductDetail({ isLogin }) {
     const { id } = useParams();
     const BASE_URL = 'http://localhost:8000';
 
@@ -20,16 +22,25 @@ export default function ProductDetail() {
 
     }, [])
 
+    const [ShowAlert, setShowAlert] = useState(false)
     const [Data, setData] = useState('')
     const [img, setimg] = useState('')
-    const [Size, setSize] = useState('')
+    const [Size, setSize] = useState(0)
+    const [Err_tit, setErr_tit] = useState('');
+    const [Err_msg, setErr_msg] = useState('');
+
+    setTimeout(() => {
+        setShowAlert(false)
+    }, 5000);
 
     if (Data == '') {
-        return null;
+        return <Loader />;
     }
     return (
         <div className='productDetail'>
-
+            {ShowAlert &&
+                <Alert Err_tit={Err_tit} Err_msg={Err_msg} setShowAlert={setShowAlert} />
+            }
             <div className="top">
 
                 {/* img */}
@@ -62,12 +73,12 @@ export default function ProductDetail() {
                     <div id="size">
                         <h2>Select Size</h2>
                         <ul>
-                            <li onClick={()=>setSize(6)}>6</li>
-                            <li onClick={()=>setSize(7)}>7</li>
-                            <li onClick={()=>setSize(8)}>8</li>
-                            <li onClick={()=>setSize(9)}>9</li>
-                            <li onClick={()=>setSize(10)}>10</li>
-                            <li onClick={()=>setSize(11)}>11</li>
+                            <li className={Size === 6 ? 'active' : ''} onClick={() => setSize(6)}>6</li>
+                            <li className={Size === 7 ? 'active' : ''} onClick={() => setSize(7)}>7</li>
+                            <li className={Size === 8 ? 'active' : ''} onClick={() => setSize(8)}>8</li>
+                            <li className={Size === 9 ? 'active' : ''} onClick={() => setSize(9)}>9</li>
+                            <li className={Size === 10 ? 'active' : ''} onClick={() => setSize(10)}>10</li>
+                            <li className={Size === 11 ? 'active' : ''} onClick={() => setSize(11)}>11</li>
                         </ul>
                     </div>
 
@@ -88,6 +99,21 @@ export default function ProductDetail() {
 
     function addBag() {
 
+        if (!isLogin) {
+            setShowAlert(true);
+            setErr_tit("Login");
+            setErr_msg("Please login to add shoe in cart");
+            return
+        }
+
+
+        if (Size === 0) {
+            setShowAlert(true);
+            setErr_tit("Error");
+            setErr_msg("Please select Size");
+            return
+        }
+
         const data = {
             shoe_id: Data._id,
             name: Data.name,
@@ -101,9 +127,10 @@ export default function ProductDetail() {
             .then((res) => {
                 console.log(res.data);
             });
+            setShowAlert(true);
+            setErr_tit("Added");
+            setErr_msg("Shoe is Added in BAG");
     }
 
-    function uptBag() {
 
-    }
 }

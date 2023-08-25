@@ -12,11 +12,16 @@ import ProfileEdit from './Components/profileEdit/ProfileEdit';
 import Test from './Admin/Test';
 import Page_not_found from './pages/page_not_found/Page_not_found';
 import Successful from './pages/successful/Successful';
+import { useState } from 'react';
 
 function App() {
+  const [isLogin, setisLogin] = useState(false)
+
+  console.log(isLogin);
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar setisLogin={setisLogin} />
 
       <div className="mainPages">
 
@@ -24,19 +29,26 @@ function App() {
           <Route path='/test' exact={true} element={<Test />} />
           <Route path='/' exact={true} element={<Home />} />
           <Route path='/BrowseProduct/:ctg' exact={true} element={<BrowseProduct />} />
-          <Route path='/ProductDetail/:id' exact={true} element={<ProductDetail />} />
-          
+          <Route path='/ProductDetail/:id' exact={true} element={<ProductDetail isLogin={isLogin} />} />
 
-          <Route path='/Bag' exact={true} element={<Bag />} />
-          <Route path='/CheckoutAddr' exact={true} element={<CheckoutAddr />} />
-          
-          <Route path='/Profile' exact={true} element={<Profile />} >
-            <Route path='/Profile/edit' exact={true} element={<ProfileEdit/>} />
-            <Route path='/Profile/order' exact={true} element={<OrderProduct/>} />
-          </Route>
 
-          <Route path='*' exact={true} element={<Page_not_found/>} />
-          <Route path='/orderSuccess' exact={true} element={<Successful/>} />
+          
+          {isLogin && <>
+
+            <Route path='/Bag' exact={true} element={<Bag />} />
+            <Route path='/CheckoutAddr' exact={true} element={<CheckoutAddr />} />
+            <Route path='/Profile' exact={true} element={<Profile />} >
+              <Route path='/Profile/edit' exact={true} element={<ProfileEdit />} />
+              <Route path='/Profile/order' exact={true} element={<OrderProduct />} />
+            </Route>
+
+            <Route path='/orderSuccess' exact={true} element={<Successful />} />
+
+          </>}
+
+
+
+          <Route path='*' exact={true} element={<Page_not_found />} />
 
         </Routes>
 

@@ -6,7 +6,7 @@ export default function Loader() {
 
     <div className="loader">
 
-    <div class="lds-ripple"><div></div><div></div></div>
+    <div className="lds-ripple"><div></div><div></div></div>
     </div>
   )
 }

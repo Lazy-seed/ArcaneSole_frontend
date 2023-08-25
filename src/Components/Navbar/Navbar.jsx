@@ -8,16 +8,19 @@ import { RxCrossCircled } from "react-icons/rx";
 import { ImSearch } from "react-icons/im";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Alert from '../Alert/Alert';
 
-export default function Navbar() {
+export default function Navbar({setisLogin}) {
 
 
 
     useEffect(() => {
 
         axios.get('http://localhost:8000/api/userInfo', { withCredentials: true }).then((response) => {
-            console.log(response.data.success);
-            setIsLogin(response.data.success)
+            // console.log(response.data.success);
+            setIsLogin(response.data.success);
+            setisLogin(response.data.success);
+
         })
     }, [])
 
@@ -25,14 +28,14 @@ export default function Navbar() {
 
     const [IsLogin, setIsLogin] = useState(false);
     const [ShowModal, setShowModal] = useState(false);
-    const [ShowError, setShowError] = useState(false);
+    const [ShowAlert, setShowAlert] = useState(false);
     const [Err_tit, setErr_tit] = useState('');
     const [Err_msg, setErr_msg] = useState('');
 
 
 
     setTimeout(() => {
-        setShowError(false)
+        setShowAlert(false)
     }, 5000);
 
 
@@ -51,21 +54,18 @@ export default function Navbar() {
 
                     <li><ImSearch id='icon' /></li>
                     <li><FaHeart id='icon' /></li>
-                    <li><Link to='/Bag'><FaShoppingBag id='icon' /></Link></li>
+                    {IsLogin? <li><Link to='/Bag'><FaShoppingBag id='icon' /></Link></li>:<li onClick={() => setShowModal('login')}><FaShoppingBag id='icon' /></li> }
+                    
                     {IsLogin && <li><Link to='/Profile'><img src={profie} alt="" /></Link></li> }
-                    {IsLogin===false && <li onClick={() => setShowModal('login')}><button className='login-btn'>Login</button></li> }
+                    {!IsLogin && <li onClick={() => setShowModal('login')}><button className='login-btn'>Login</button></li> }
            
            
                 </ul>
             </div>
 
             {/* error msg */}
-            {ShowError &&
-                <div className="error_msg">
-                    <p> <strong>{Err_tit} : </strong>{Err_msg}</p>
-                    <RxCrossCircled id='alert_icon' onClick={() => setShowModal(false)} />
-
-                </div>}
+            {ShowAlert &&
+            <Alert Err_tit={Err_tit}  Err_msg={Err_msg} setShowAlert={setShowAlert}/>}
 
 
             {ShowModal === 'login' &&
@@ -125,7 +125,7 @@ export default function Navbar() {
             console.log("empty");
             setErr_tit("Error");
             setErr_msg("Fields cannot be Empty ")
-            setShowError(true);
+            setShowAlert(true);
             return null;
         }
 
@@ -133,7 +133,7 @@ export default function Navbar() {
             console.log("pass not match");
             setErr_tit("Error");
             setErr_msg("Password not match")
-            setShowError(true);
+            setShowAlert(true);
             return null;
         }
 
@@ -144,7 +144,7 @@ export default function Navbar() {
             console.log(response);
             setErr_tit("Success");
             setErr_msg("User has been Register successfully")
-            setShowError(true);
+            setShowAlert(true);
         }).catch((err) => { console.log(err); })
 
 
@@ -160,7 +160,7 @@ export default function Navbar() {
             console.log("empty");
             setErr_tit("Error");
             setErr_msg("Fields cannot be Empty ")
-            setShowError(true);
+            setShowAlert(true);
             return null;
         }
         const data = { email, password }
@@ -171,11 +171,11 @@ export default function Navbar() {
             if (response.data.success === false) {
                 setErr_tit("Error");
                 setErr_msg("Invalid Credentials")
-                setShowError(true);
+                setShowAlert(true);
             } else {
                 setErr_tit("Success");
                 setErr_msg("Login successfull")
-                setShowError(true);
+                setShowAlert(true);
                 setShowModal(false);
                 window.location.reload();
 
@@ -184,7 +184,7 @@ export default function Navbar() {
             console.log(err);
             setErr_tit("Error");
             setErr_msg("User not Found")
-            setShowError(true);
+            setShowAlert(true);
         })
 
     }

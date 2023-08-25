@@ -45,7 +45,7 @@ export default function Home() {
   <ul>
     <li><img src={pop1} alt="" /></li>
     <li><img src={pop2} alt="" /></li>
-    <li><h3>'More -{'>'}'</h3></li>
+    <li><h3>More -{'>'}</h3></li>
   </ul>
 </div>
 

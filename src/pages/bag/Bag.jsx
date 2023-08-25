@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import './bag.scss';
 import { CgTrash } from 'react-icons/cg'
-import { Link } from 'react-router-dom';
 import logo from './logo.png';
+import empty from './empty.png';
 import Alert from '../../Components/Alert/Alert';
 import Loader from '../../Components/Loader/Loader';
 
@@ -104,9 +104,22 @@ export default function Bag() {
     const [Err_msg, setErr_msg] = useState('');
     const [ShowAlert, setShowAlert] = useState(false);
 
+
+
+    setTimeout(() => {
+        setShowAlert(false)
+    }, 5000);
+
+
     if (Data === '') {
         return <Loader />;
     }
+    if (Data.toString() ==='') {
+        return <img src={empty} className='empty_img'/>
+        
+    }
+
+    console.log(Data);
 
     return (
         <div className='bag'>
