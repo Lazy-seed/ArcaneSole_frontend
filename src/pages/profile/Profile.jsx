@@ -5,7 +5,7 @@ import { CgProfile } from "react-icons/cg";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiHelpCircle } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Profile() {
@@ -51,7 +51,7 @@ export default function Profile() {
                             <BiHelpCircle id='icon' /> <h2>Help</h2>
                         </li>
                         <hr />
-                        <li>
+                        <li onClick={Logout} id='logout_btn'>
                             <BiLogOut id='icon' /> <h2>Logout</h2>
                         </li>
                     </ul>
@@ -68,5 +68,12 @@ export default function Profile() {
 
 
         </div>
-    )
+    );
+
+    function Logout(params) {
+        axios.get('http://localhost:8000/api/Logout', { withCredentials: true })
+        .then((response) => {
+            window.location.href='/';
+        })
+    }
 }

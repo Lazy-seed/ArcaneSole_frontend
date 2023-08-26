@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import axios from "axios";
 import './checkoutAddr.scss';
 import { useNavigate } from "react-router-dom";
@@ -106,7 +106,6 @@ async function displayRazorpay() {
   // xxxxxx---------------------------------------------------------------------------
 
 // const --------------------------------------
-const [Data, setData] = useState('')
     let TotalPrice = 0;
     let DeliveryPrice = 495;
     const [Err_tit, setErr_tit] = useState('');
@@ -124,10 +123,8 @@ const [Data, setData] = useState('')
 
     return (
         <div className='checkoutAddr'>
- {
-                ShowAlert && <Alert Err_tit={Err_tit} Err_msg={Err_msg} setShowAlert={setShowAlert} />
-            }
             <div className='container'>
+            {ShowAlert && <Alert Err_tit={Err_tit} Err_msg={Err_msg} setShowAlert={setShowAlert} />}
                 <h2>Delivery Address</h2>
                 <div className="textbox1">
                     <div className="label1">House No/Building</div>
@@ -163,7 +160,7 @@ const [Data, setData] = useState('')
                     <input type="text" id='pincode' />
 
                 </div>
-                <button onClick={displayRazorpay} id='deliver-btn'>Deliver here</button>
+                <button onClick={valid} id='deliver-btn'>Deliver here</button>
             </div>
         </div>
     );
@@ -173,6 +170,24 @@ const [Data, setData] = useState('')
     // setShowAlert(true);
 
 
+    function valid(){
+        var house = document.getElementById("house").value;
+        var area = document.getElementById("area").value;
+        var state = document.getElementById("state").value;
+        var city = document.getElementById("city").value;
+        var pincode = document.getElementById("pincode").value;
+
+        if (house.trim()==='') {
+            setErr_tit("Error")
+            setErr_msg("fill all fields")
+            setShowAlert(true)
+            return
+        }
+        // payment calll
+        displayRazorpay()
+
+    }
+
     function makeOrder() {
       
         var house = document.getElementById("house").value;
@@ -180,6 +195,9 @@ const [Data, setData] = useState('')
         var state = document.getElementById("state").value;
         var city = document.getElementById("city").value;
         var pincode = document.getElementById("pincode").value;
+
+
+
         const address={house,area,state,city,pincode}
 
         axios.post(`${BASE_URL}/api/newOrder`,address,{withCredentials:true}).then((res)=>{
