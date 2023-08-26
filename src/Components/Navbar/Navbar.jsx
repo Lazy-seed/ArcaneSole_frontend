@@ -56,7 +56,7 @@ export default function Navbar({setisLogin}) {
                     <li><FaHeart id='icon' /></li>
                     {IsLogin? <li><Link to='/Bag'><FaShoppingBag id='icon' /></Link></li>:<li onClick={() => setShowModal('login')}><FaShoppingBag id='icon' /></li> }
                     
-                    {IsLogin && <li><Link to='/Profile'><img src={profie} alt="" /></Link></li> }
+                    {IsLogin && <li><Link to='/Profile/edit'><img src={profie} alt="" /></Link></li> }
                     {!IsLogin && <li onClick={() => setShowModal('login')}><button className='login-btn'>Login</button></li> }
            
            

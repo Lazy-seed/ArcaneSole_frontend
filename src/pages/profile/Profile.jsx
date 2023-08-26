@@ -5,7 +5,7 @@ import { CgProfile } from "react-icons/cg";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiHelpCircle } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Profile() {
