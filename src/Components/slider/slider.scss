@@ -1,27 +1,90 @@
 .slider {
 
-    section {
-        width: 100vw;
-        
-        ul {
-            display: flex;
-            overflow-x: auto;
-            overflow-y: hidden;
-            width: 100%;
-            li {
-                height: 500px;
 
-                img {
-                    width: 100vw;
-                    height: 100%;
+    width: 100vw;
+    background: #CCF9FFFF;
+
+    section {
+        background-image: url('./bg.png');
+
+        .box {
+            height: 500px;
+            border: solid 1px rgb(198, 198, 198);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .title {
+                text-align: left;
+                padding: 20px 50px;
+                height: fit-content;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(1px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+
+                h2 {
+                    font-size: 100px;
                 }
+
+                h3 {
+                    font-size: 80px;
+                }
+
+                p {
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+                a{
+                    padding: 5px 20px;
+                    background: #000;
+                    color: #fff;
+
+                    cursor: pointer;
+                }
+
+                span {
+                    color: crimson;
+                }
+            }
+
+
+            img {
+                width: 600px;
+                object-fit: cover;
+                // position: absolute;
+                // right: 100px;
+                // top: -50px;
+                transform: rotate(-10deg);
+                transition: all .5s;
+                animation: shoeDance infinite 3s;
+                filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 1));
+
             }
         }
     }
 }
 
 
-@keyframes slide {
+@keyframes shoeDance {
+    0% {
+        transform: rotate(-10deg);
 
-    
+
+    }
+
+    50% {
+        transform: rotate(-20deg);
+
+
+    }
+
+    100% {
+        transform: rotate(-10deg);
+
+    }
 }

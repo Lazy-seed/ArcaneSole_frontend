@@ -28,7 +28,6 @@ export default function ProfileEdit() {
       <form>
         <div className="img_containr">
           <img src={profile} alt="" />
-          <button>Edit</button>
         </div>
 
         <div className="name_box">
