@@ -37,7 +37,7 @@ function App() {
           {isLogin && <>
 
             <Route path='/Bag' exact={true} element={<Bag />} />
-            <Route path='/CheckoutAddr' exact={true} element={<CheckoutAddr />} />
+            <Route path='Bag/CheckoutAddr' exact={true} element={<CheckoutAddr />} />
             <Route path='/Profile' exact={true} element={<Profile />} >
               <Route path='/Profile/edit' exact={true} element={<ProfileEdit />} />
               <Route path='/Profile/order' exact={true} element={<OrderProduct />} />

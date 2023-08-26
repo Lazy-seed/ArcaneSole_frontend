@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import './bag.scss';
+import {Link} from 'react-router-dom'
 import { CgTrash } from 'react-icons/cg'
-import logo from './logo.png';
 import empty from './empty.png';
 import Alert from '../../Components/Alert/Alert';
 import Loader from '../../Components/Loader/Loader';
@@ -19,79 +19,7 @@ export default function Bag() {
 
     }, [])
 
-    // payment
-    function loadScript(src) {
-        return new Promise((resolve) => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.onload = () => { resolve(true); };
-            script.onerror = () => { resolve(false); };
-            document.body.appendChild(script);
-        });
-    }
-
-    async function displayRazorpay() {
-        document.getElementById("checkOut-btn").innerText = "Loading...";
-        const res = await loadScript(
-            "https://checkout.razorpay.com/v1/checkout.js"
-        );
-
-        if (!res) {
-            alert("Razorpay SDK failed to load. Are you online?");
-            return;
-        }
-
-
-
-
-        // amount upadte
-        const amt = { amt: TotalPrice + DeliveryPrice }
-        // creating a new order
-        const result = await axios.post("http://localhost:8000/payment/orders", amt, { withCredentials: true });
-
-        if (!result) {
-            alert("Server error. Are you online?");
-            return;
-        }
-
-        // Getting the order details back
-        const { amount, id: order_id, currency } = result.data;
-
-
-        const options = {
-            key: "rzp_test_VriOzbggcgpNkd", // Enter the Key ID generated from the Dashboard
-            amount: amount.toString(),
-            currency: currency,
-            name: "ArcaneSole",
-            description: "Test Transaction",
-            image: logo,
-            order_id: order_id,
-            handler: async function (response) {
-                const data = {
-                    orderCreationId: order_id,
-                    razorpayPaymentId: response.razorpay_payment_id,
-                    razorpayOrderId: response.razorpay_order_id,
-                    razorpaySignature: response.razorpay_signature,
-                };
-
-                const result = await axios.post("http://localhost:8000/payment/success", data);
-
-                alert(result.data.msg);
-            },
-            notes: {
-                address: "Soumya Dey Corporate Office",
-            },
-            theme: {
-                color: "#61dafb",
-            },
-        };
-
-        const paymentObject = new window.Razorpay(options);
-        paymentObject.open();
-        document.getElementById("checkOut-btn").innerText = "Checkout";
-
-
-    }
+  
 
 
 
@@ -115,7 +43,7 @@ export default function Bag() {
         return <Loader />;
     }
     if (Data.toString() ==='') {
-        return <img src={empty} className='empty_img'/>
+        // return <img src={empty} className='empty_img'/>
         
     }
 
@@ -191,7 +119,7 @@ export default function Bag() {
 
                     </ul>
 
-                    <button onClick={displayRazorpay} id='checkOut-btn'>Checkout</button>
+                    <Link to='./CheckoutAddr' id='checkOut-btn'>Checkout</Link>
                 </div>
 
             </div>
